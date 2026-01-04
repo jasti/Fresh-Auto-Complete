@@ -5,11 +5,15 @@ A modern, intelligent autocomplete search app that surfaces the most up-to-date 
 ## ✨ Features
 
 - **Real-time Trending Content**: Pulls fresh trending topics from multiple sources
-- **Intelligent Autocomplete**: Suggests queries as you type using Google's autocomplete API
+- **Intelligent Autocomplete**: Advanced multi-source autocomplete that works with natural queries
+- **Smart Query Expansion**: Automatically suggests completions for conversational queries like "what is happening..."
 - **Personalized Suggestions**: Learns from your search history and interests
 - **Location-Aware**: Detects your location for local trending content
 - **Multiple Data Sources**:
   - Google Autocomplete Suggestions
+  - Wikipedia OpenSearch
+  - DuckDuckGo Autocomplete
+  - Smart Query Templates (for natural language queries)
   - Reddit Hot Topics
   - Wikipedia Trending Articles
   - News Headlines (with NewsAPI key)
@@ -71,13 +75,29 @@ For enhanced trending news topics:
 4. **Navigation**: Use arrow keys to navigate suggestions, Enter to select
 5. **Personalization**: The more you search, the better the suggestions become!
 
+### 💬 Natural Language Queries
+
+The app works great with conversational queries! Try typing:
+- "what is happening..." → get suggestions like "what is happening today", "what is happening in [your city]"
+- "how to..." → smart completions with current year and trending topics
+- "why is..." → trending topic completions
+- "where can..." → location-aware suggestions
+- "when is..." → time-based query expansions
+
+The smart query expansion feature recognizes question patterns and automatically suggests relevant completions!
+
 ## 🎯 Understanding Suggestion Sources
 
 Suggestions are tagged with different sources:
 
 - 🔥 **Trending**: From current trending topics (Reddit, Wikipedia, News)
+- 💡 **Smart**: Intelligent query expansions for natural language questions
 - ⭐ **Personalized**: Based on your search history and interests
 - 🔍 **Google**: From Google's autocomplete API
+- 📚 **Wikipedia**: From Wikipedia's OpenSearch suggestions
+- 🦆 **DuckDuckGo**: From DuckDuckGo's autocomplete
+
+The app intelligently combines all sources and prioritizes fresh, trending content!
 
 ## 🔒 Privacy
 
@@ -95,10 +115,13 @@ Suggestions are tagged with different sources:
 
 ### Data Sources
 - **Google Autocomplete**: `suggestqueries.google.com`
+- **Wikipedia OpenSearch**: `en.wikipedia.org/w/api.php` (autocomplete suggestions)
+- **Wikipedia Trending**: Wikimedia pageviews API (trending articles)
+- **DuckDuckGo**: `duckduckgo.com/ac/` (autocomplete suggestions)
 - **Reddit**: `/r/all/hot.json` endpoint
-- **Wikipedia**: Wikimedia pageviews API
 - **NewsAPI**: Top headlines (optional, requires API key)
 - **OpenStreetMap**: Nominatim API for location names
+- **Smart Query Templates**: Client-side pattern matching for natural language queries
 
 ### Browser Compatibility
 - Chrome/Edge: ✅ Full support

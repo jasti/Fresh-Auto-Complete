@@ -124,6 +124,9 @@ class FreshAutocomplete {
     async getAutocomplete(query) {
         const suggestions = await Promise.all([
             this.getGoogleSuggestions(query),
+            this.getWikipediaSearchSuggestions(query),
+            this.getDuckDuckGoSuggestions(query),
+            this.getSmartQueryExpansions(query),
             this.getPersonalizedSuggestions(query),
             this.getTrendingSuggestions(query)
         ]);
@@ -149,12 +152,14 @@ class FreshAutocomplete {
             if (b.source === 'trending' && a.source !== 'trending') return 1;
             if (a.source === 'personalized' && b.source !== 'personalized') return -1;
             if (b.source === 'personalized' && a.source !== 'personalized') return 1;
+            if (a.source === 'smart' && b.source !== 'smart') return -1;
+            if (b.source === 'smart' && a.source !== 'smart') return 1;
 
             // Then by freshness score
             return (b.freshness || 0) - (a.freshness || 0);
         });
 
-        this.currentResults = combined.slice(0, 8);
+        this.currentResults = combined.slice(0, 10);
         this.displayResults();
     }
 
@@ -174,6 +179,121 @@ class FreshAutocomplete {
             console.error('Google suggestions error:', error);
             return [];
         }
+    }
+
+    async getWikipediaSearchSuggestions(query) {
+        try {
+            const response = await fetch(
+                `https://en.wikipedia.org/w/api.php?action=opensearch&search=${encodeURIComponent(query)}&limit=5&namespace=0&format=json&origin=*`
+            );
+            const data = await response.json();
+
+            return (data[1] || []).map(text => ({
+                text,
+                source: 'wikipedia',
+                freshness: 6
+            }));
+        } catch (error) {
+            console.error('Wikipedia search error:', error);
+            return [];
+        }
+    }
+
+    async getDuckDuckGoSuggestions(query) {
+        try {
+            const response = await fetch(
+                `https://duckduckgo.com/ac/?q=${encodeURIComponent(query)}&type=list`
+            );
+            const data = await response.json();
+
+            return (data[1] || []).slice(0, 5).map(text => ({
+                text,
+                source: 'duckduckgo',
+                freshness: 5
+            }));
+        } catch (error) {
+            console.error('DuckDuckGo suggestions error:', error);
+            return [];
+        }
+    }
+
+    getSmartQueryExpansions(query) {
+        const queryLower = query.toLowerCase();
+        const suggestions = [];
+
+        // Common question patterns
+        const questionPatterns = [
+            { starts: ['what is', 'what are', 'what was', 'what were'], completions: ['happening', 'trending', 'the best', 'the latest', 'new'] },
+            { starts: ['how to', 'how do', 'how does', 'how can'], completions: ['today', 'now', 'this year', '2026'] },
+            { starts: ['why is', 'why are', 'why did', 'why does'], completions: ['trending', 'important', 'popular', 'happening'] },
+            { starts: ['when is', 'when did', 'when does'], completions: ['today', 'this year', 'happening', 'next'] },
+            { starts: ['where is', 'where are', 'where can'], completions: ['trending', 'happening', 'now', 'today'] }
+        ];
+
+        // Check if query matches any pattern
+        questionPatterns.forEach(pattern => {
+            pattern.starts.forEach(start => {
+                if (queryLower.startsWith(start)) {
+                    pattern.completions.forEach(completion => {
+                        const suggestion = `${query} ${completion}`;
+                        suggestions.push({
+                            text: suggestion,
+                            source: 'smart',
+                            freshness: 7
+                        });
+                    });
+                }
+            });
+        });
+
+        // Add location-based completions if we have location
+        if (this.userLocation && this.userLocation.name) {
+            if (queryLower.includes('what is happening') || queryLower.includes('what\'s happening')) {
+                suggestions.push({
+                    text: `${query} in ${this.userLocation.name}`,
+                    source: 'smart',
+                    freshness: 9
+                });
+                suggestions.push({
+                    text: `${query} today`,
+                    source: 'smart',
+                    freshness: 9
+                });
+            }
+
+            // Add location for general queries
+            const locationTriggers = ['near me', 'nearby', 'local', 'in my area'];
+            if (!locationTriggers.some(trigger => queryLower.includes(trigger)) && query.split(' ').length <= 3) {
+                if (queryLower.startsWith('where') || queryLower.startsWith('find')) {
+                    suggestions.push({
+                        text: `${query} near ${this.userLocation.name}`,
+                        source: 'smart',
+                        freshness: 8
+                    });
+                }
+            }
+        }
+
+        // Add trending topic completions
+        if (query.length >= 3) {
+            this.trendingCache.data.slice(0, 3).forEach(trend => {
+                const trendWords = trend.toLowerCase().split(' ');
+                const queryWords = queryLower.split(' ');
+
+                // Check if any words match
+                const hasMatch = trendWords.some(tw => queryWords.some(qw => tw.includes(qw) || qw.includes(tw)));
+
+                if (hasMatch && !queryLower.includes(trend.toLowerCase())) {
+                    suggestions.push({
+                        text: `${query} ${trend}`,
+                        source: 'smart',
+                        freshness: 8
+                    });
+                }
+            });
+        }
+
+        return suggestions.slice(0, 4);
     }
 
     getPersonalizedSuggestions(query) {
@@ -260,6 +380,9 @@ class FreshAutocomplete {
     getSourceIcon(source) {
         const icons = {
             'google': '🔍',
+            'wikipedia': '📚',
+            'duckduckgo': '🦆',
+            'smart': '💡',
             'trending': '🔥',
             'personalized': '⭐',
             'local': '📍'

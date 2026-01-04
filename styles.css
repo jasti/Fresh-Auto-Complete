@@ -172,6 +172,26 @@ header h1 {
     color: var(--success-color);
 }
 
+.source-wikipedia {
+    background: rgba(139, 92, 246, 0.2);
+    color: var(--secondary-color);
+}
+
+.source-duckduckgo {
+    background: rgba(99, 102, 241, 0.2);
+    color: var(--primary-color);
+}
+
+.source-smart {
+    background: rgba(245, 158, 11, 0.2);
+    color: var(--trending-color);
+}
+
+.source-google {
+    background: rgba(99, 102, 241, 0.2);
+    color: var(--primary-color);
+}
+
 .info-bar {
     display: flex;
     justify-content: space-between;
