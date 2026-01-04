@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Autocomplete - Trending Search</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔥 Fresh Autocomplete</h1>
+            <p class="tagline">Discover what's trending near you, tailored to your interests</p>
+        </header>
+
+        <div class="search-container">
+            <div class="search-box">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Start typing to discover trending topics..."
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+                <button id="clearBtn" class="clear-btn" aria-label="Clear search">×</button>
+            </div>
+
+            <div id="autocompleteResults" class="autocomplete-results"></div>
+        </div>
+
+        <div class="info-bar">
+            <div class="location-info">
+                <span id="locationText">📍 Detecting location...</span>
+            </div>
+            <div class="personalization-info">
+                <span id="personalizedText">🎯 Learning your interests</span>
+            </div>
+        </div>
+
+        <div class="trending-section">
+            <h2>🌟 Trending Now</h2>
+            <div id="trendingTopics" class="trending-topics"></div>
+        </div>
+
+        <div class="settings">
+            <button id="settingsToggle" class="settings-toggle">⚙️ Settings</button>
+            <div id="settingsPanel" class="settings-panel hidden">
+                <h3>Settings</h3>
+                <div class="setting-item">
+                    <label for="newsApiKey">NewsAPI Key (optional):</label>
+                    <input type="text" id="newsApiKey" placeholder="Enter your NewsAPI key">
+                    <small>Get free key at <a href="https://newsapi.org" target="_blank">newsapi.org</a></small>
+                </div>
+                <div class="setting-item">
+                    <button id="clearHistory" class="btn-secondary">Clear Search History</button>
+                    <button id="clearPersonalization" class="btn-secondary">Reset Personalization</button>
+                </div>
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="useLocation" checked>
+                        Use my location for local trends
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Powered by multiple trending sources • Updates in real-time</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
