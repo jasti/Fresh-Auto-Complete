@@ -5,21 +5,23 @@
 }
 
 :root {
-    --primary-color: #6366f1;
-    --secondary-color: #8b5cf6;
-    --accent-color: #ec4899;
-    --bg-color: #0f172a;
-    --surface-color: #1e293b;
-    --text-color: #f1f5f9;
-    --text-secondary: #cbd5e1;
-    --border-color: #334155;
-    --success-color: #10b981;
-    --trending-color: #f59e0b;
+    --primary-color: #1877F2;
+    --secondary-color: #42B72A;
+    --accent-color: #E7F3FF;
+    --bg-color: #F0F2F5;
+    --surface-color: #FFFFFF;
+    --text-color: #050505;
+    --text-secondary: #65676B;
+    --border-color: #CED0D4;
+    --border-light: #E4E6EB;
+    --success-color: #42B72A;
+    --trending-color: #F3425F;
+    --hover-bg: #F2F3F5;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: linear-gradient(135deg, var(--bg-color) 0%, #1e293b 100%);
+    font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg-color);
     color: var(--text-color);
     min-height: 100vh;
     padding: 20px;
@@ -38,11 +40,10 @@ header {
 
 header h1 {
     font-size: 3rem;
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--primary-color);
+    font-weight: 700;
     margin-bottom: 10px;
+    letter-spacing: -0.5px;
 }
 
 .tagline {
@@ -64,19 +65,24 @@ header h1 {
 
 #searchInput {
     width: 100%;
-    padding: 20px 50px 20px 20px;
-    font-size: 1.2rem;
+    padding: 12px 50px 12px 16px;
+    font-size: 1.1rem;
     background: var(--surface-color);
-    border: 2px solid var(--border-color);
-    border-radius: 16px;
+    border: 1px solid var(--border-light);
+    border-radius: 50px;
     color: var(--text-color);
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     outline: none;
+    font-weight: 400;
 }
 
 #searchInput:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.1);
+}
+
+#searchInput::placeholder {
+    color: var(--text-secondary);
 }
 
 .clear-btn {
@@ -107,17 +113,17 @@ header h1 {
 
 .autocomplete-results {
     position: absolute;
-    top: calc(100% + 10px);
+    top: calc(100% + 8px);
     left: 0;
     right: 0;
     background: var(--surface-color);
-    border: 2px solid var(--border-color);
-    border-radius: 16px;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
     max-height: 400px;
     overflow-y: auto;
     z-index: 1000;
     display: none;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .autocomplete-results.visible {
@@ -126,10 +132,10 @@ header h1 {
 }
 
 .autocomplete-item {
-    padding: 15px 20px;
+    padding: 12px 16px;
     cursor: pointer;
-    border-bottom: 1px solid var(--border-color);
-    transition: background 0.2s ease;
+    border-bottom: 1px solid var(--border-light);
+    transition: background 0.15s ease;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -141,7 +147,7 @@ header h1 {
 
 .autocomplete-item:hover,
 .autocomplete-item.selected {
-    background: rgba(99, 102, 241, 0.1);
+    background: var(--hover-bg);
 }
 
 .autocomplete-item-text {
@@ -151,44 +157,45 @@ header h1 {
 .autocomplete-item-source {
     font-size: 0.75rem;
     color: var(--text-secondary);
-    background: rgba(99, 102, 241, 0.2);
-    padding: 4px 8px;
-    border-radius: 6px;
+    background: var(--bg-color);
+    padding: 4px 10px;
+    border-radius: 12px;
     margin-left: 10px;
+    font-weight: 500;
 }
 
 .source-trending {
-    background: rgba(245, 158, 11, 0.2);
+    background: #FFE8EC;
     color: var(--trending-color);
 }
 
 .source-personalized {
-    background: rgba(236, 72, 153, 0.2);
-    color: var(--accent-color);
+    background: #FFF3CD;
+    color: #856404;
 }
 
 .source-local {
-    background: rgba(16, 185, 129, 0.2);
+    background: #D1F2EB;
     color: var(--success-color);
 }
 
 .source-wikipedia {
-    background: rgba(139, 92, 246, 0.2);
-    color: var(--secondary-color);
+    background: #E7E9F7;
+    color: #5865F2;
 }
 
 .source-duckduckgo {
-    background: rgba(99, 102, 241, 0.2);
+    background: #E7F3FF;
     color: var(--primary-color);
 }
 
 .source-smart {
-    background: rgba(245, 158, 11, 0.2);
+    background: #FFE8EC;
     color: var(--trending-color);
 }
 
 .source-google {
-    background: rgba(99, 102, 241, 0.2);
+    background: #E7F3FF;
     color: var(--primary-color);
 }
 
@@ -203,25 +210,31 @@ header h1 {
 .location-info,
 .personalization-info {
     background: var(--surface-color);
-    padding: 12px 20px;
-    border-radius: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
     font-size: 0.9rem;
     color: var(--text-secondary);
     flex: 1;
     min-width: 200px;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .trending-section {
     background: var(--surface-color);
-    padding: 25px;
-    border-radius: 16px;
-    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
     animation: fadeInUp 0.6s ease-out 0.2s both;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .trending-section h2 {
-    margin-bottom: 20px;
-    color: var(--trending-color);
+    margin-bottom: 16px;
+    color: var(--text-color);
+    font-size: 1.25rem;
+    font-weight: 600;
 }
 
 .trending-topics {
@@ -231,19 +244,20 @@ header h1 {
 }
 
 .trending-topic {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-    padding: 10px 16px;
-    border-radius: 20px;
-    font-size: 0.9rem;
+    background: var(--bg-color);
+    padding: 8px 14px;
+    border-radius: 16px;
+    font-size: 0.875rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+    border: 1px solid var(--border-light);
+    color: var(--text-color);
+    font-weight: 500;
 }
 
 .trending-topic:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
-    border-color: var(--primary-color);
+    background: var(--hover-bg);
+    border-color: var(--border-color);
 }
 
 .trending-topic.fresh {
@@ -256,28 +270,31 @@ header h1 {
 
 .settings-toggle {
     background: var(--surface-color);
-    border: 2px solid var(--border-color);
+    border: 1px solid var(--border-light);
     color: var(--text-color);
-    padding: 12px 24px;
-    border-radius: 12px;
+    padding: 10px 20px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .settings-toggle:hover {
-    border-color: var(--primary-color);
+    background: var(--hover-bg);
 }
 
 .settings-panel {
     background: var(--surface-color);
-    border: 2px solid var(--border-color);
-    border-radius: 16px;
-    padding: 25px;
-    margin-top: 15px;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 12px;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .settings-panel:not(.hidden) {
@@ -285,27 +302,38 @@ header h1 {
 }
 
 .settings-panel h3 {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
 }
 
 .setting-item {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .setting-item label {
     display: block;
-    margin-bottom: 8px;
-    color: var(--text-secondary);
+    margin-bottom: 6px;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .setting-item input[type="text"] {
     width: 100%;
-    padding: 10px 15px;
-    background: var(--bg-color);
+    padding: 10px 12px;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 6px;
     color: var(--text-color);
     font-size: 0.95rem;
+    transition: border-color 0.2s ease;
+}
+
+.setting-item input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
 }
 
 .setting-item small {
@@ -324,16 +352,17 @@ header h1 {
     background: var(--bg-color);
     border: 1px solid var(--border-color);
     color: var(--text-color);
-    padding: 10px 20px;
-    border-radius: 8px;
+    padding: 8px 16px;
+    border-radius: 6px;
     cursor: pointer;
     margin-right: 10px;
-    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
 }
 
 .btn-secondary:hover {
-    border-color: var(--primary-color);
-    background: rgba(99, 102, 241, 0.1);
+    background: var(--hover-bg);
 }
 
 footer {
@@ -395,25 +424,28 @@ footer {
 
 /* Scrollbar */
 .autocomplete-results::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 .autocomplete-results::-webkit-scrollbar-track {
-    background: var(--bg-color);
-    border-radius: 0 16px 16px 0;
+    background: transparent;
 }
 
 .autocomplete-results::-webkit-scrollbar-thumb {
     background: var(--border-color);
-    border-radius: 4px;
+    border-radius: 3px;
 }
 
 .autocomplete-results::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-color);
+    background: var(--text-secondary);
 }
 
 /* Responsive */
 @media (max-width: 600px) {
+    body {
+        padding: 12px;
+    }
+
     header h1 {
         font-size: 2rem;
     }
@@ -424,10 +456,19 @@ footer {
 
     #searchInput {
         font-size: 1rem;
-        padding: 15px 40px 15px 15px;
+        padding: 10px 40px 10px 14px;
     }
 
     .info-bar {
         flex-direction: column;
+        gap: 10px;
+    }
+
+    .trending-section {
+        padding: 16px;
+    }
+
+    .settings-panel {
+        padding: 16px;
     }
 }
